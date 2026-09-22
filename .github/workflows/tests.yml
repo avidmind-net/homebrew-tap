@@ -34,10 +34,22 @@ jobs:
       - name: Set up Homebrew
         uses: Homebrew/actions/setup-homebrew@main
 
+      - name: Register this checkout as the avidmind-net/tap tap
+        # brew style/audit refuse to load a cask that isn't inside a
+        # recognized tap directory ("Homebrew requires casks to be in a
+        # tap, rejecting: ..."), and a plain actions/checkout under
+        # $GITHUB_WORKSPACE doesn't count. Symlinking the checkout into
+        # Homebrew's Taps path makes it look like an installed tap.
+        run: |
+          tap_dir="$(brew --repository)/Library/Taps/avidmind-net/homebrew-tap"
+          mkdir -p "$(dirname "$tap_dir")"
+          ln -s "$GITHUB_WORKSPACE" "$tap_dir"
+          echo "TAP_DIR=$tap_dir" >> "$GITHUB_ENV"
+
       - name: Style & audit changed casks
         run: |
           shopt -s nullglob
-          casks=(Casks/*.rb)
+          casks=("$TAP_DIR"/Casks/*.rb)
           if [ ${#casks[@]} -eq 0 ]; then
             echo "No casks yet, nothing to lint."
             exit 0
