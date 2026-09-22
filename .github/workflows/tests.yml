@@ -1,0 +1,46 @@
+name: brew test-bot
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  tap-syntax:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+
+      - name: Run brew test-bot --only-tap-syntax
+        run: brew test-bot --only-tap-syntax
+
+  # No Formula/ directory yet — re-add a `formulae` job (see git history)
+  # if this tap ever ships a CLI formula alongside its casks.
+
+  casks:
+    # brew test-bot has no cask support (Homebrew/discussions#6499), so
+    # casks are linted directly with brew style/audit instead. Needs a
+    # macOS runner since --online audit checks for a working `curl` HEAD
+    # against the download URL and cask syntax assumes macOS.
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+
+      - name: Style & audit changed casks
+        run: |
+          shopt -s nullglob
+          casks=(Casks/*.rb)
+          if [ ${#casks[@]} -eq 0 ]; then
+            echo "No casks yet, nothing to lint."
+            exit 0
+          fi
+          brew style --cask "${casks[@]}"
+          brew audit --cask --online "${casks[@]}"
