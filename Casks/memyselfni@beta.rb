@@ -8,7 +8,7 @@ cask "memyselfni@beta" do
   homepage "https://me-myself-i.com/"
 
   conflicts_with cask: "memyselfni"
-  depends_on macos: [:>=, :monterey]
+  depends_on macos: :monterey
 
   app "memyselfni.app"
 
