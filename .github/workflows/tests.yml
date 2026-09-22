@@ -55,4 +55,12 @@ jobs:
             exit 0
           fi
           brew style --cask "${casks[@]}"
-          brew audit --cask --online "${casks[@]}"
+
+          # brew audit no longer accepts file paths ("Calling `brew audit
+          # [path ...]` is disabled!") — it wants cask tokens instead.
+          tokens=()
+          for cask in "${casks[@]}"; do
+            token="$(basename "$cask" .rb)"
+            tokens+=("avidmind-net/tap/$token")
+          done
+          brew audit --cask --online "${tokens[@]}"
