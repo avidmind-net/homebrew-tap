@@ -4,7 +4,7 @@ Homebrew tap for Avidmind's apps.
 
 ## Install
 
-```
+```sh
 brew tap avidmind-net/tap
 ```
 
@@ -18,7 +18,7 @@ Then install whatever you need from the list below.
 
 Prefer the bleeding edge? A beta channel is available for apps that offer one:
 
-```
+```sh
 brew install --cask memyselfni@beta
 ```
 
@@ -31,13 +31,13 @@ macOS Monterey (12) or later.
 
 ## Upgrading
 
-```
+```sh
 brew upgrade --cask memyselfni
 ```
 
 ## Uninstalling
 
-```
+```sh
 brew uninstall --cask memyselfni
 ```
 
