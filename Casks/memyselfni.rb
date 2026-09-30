@@ -1,8 +1,8 @@
 cask "memyselfni" do
-  version "0.9.0"
-  sha256 "e60f9d027730ea8daa95ca0e1ba4784357c204932e6d37721f89f4d4303e6cb0"
+  version "0.9.1"
+  sha256 "51e965d971c0512401794afd09d57199f98e932942ecfd745ff9363689098cab"
 
-  url "https://tap.avidmind.net/memyselfni/releases/v0.9.0/memyselfni-macos.zip"
+  url "https://tap.avidmind.net/memyselfni/releases/v0.9.1/memyselfni-macos.zip"
   name "Me, Myself & I"
   desc "Personal productivity app for tasks, goals, and trackers"
   homepage "https://memyselfni.eu/"
